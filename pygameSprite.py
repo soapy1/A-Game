@@ -1,6 +1,4 @@
-#TODO: fix collisions
-#      fix movement of computer
-#      fix boundries
+#TODO: fix movement of computer
 
 #!/usr/bin/env python2
 
@@ -61,7 +59,7 @@ person.rect.x = random.randint(0,1000)
 person.rect.y = random.randint(0,700)
 
 # Key repeating
-pygame.key.set_repeat(50,10)
+pygame.key.set_repeat(5,10)
 
 # Manages how fast the screen updates
 clock = pygame.time.Clock()
@@ -86,35 +84,24 @@ while not done:
             if event.key == pygame.K_q:
                 done = True 
             elif event.key == pygame. K_LEFT :
-                car.rect.x -= 1
+                car.rect.x -= 25
             elif event.key == pygame . K_RIGHT :
-                car.rect.x += 1
+                car.rect.x += 25
             elif event.key == pygame . K_UP :
-                car.rect.y -= 1
+                car.rect.y -= 25
             elif event.key == pygame . K_DOWN :
-                car.rect.y += 1 
+                car.rect.y += 25
 
     # TODO: Fix this to make sprite move better
     # Randomly moves sprite 'person'
-    #place = random.randint(0,3)
-    #if place == 0:
-    #    person.rect.x += 10
-    #if place == 1:
-    #    person.rect.x -= 10
-    #if place == 2:
-    #   person.rect.y += 10
-    #if place == 3:
-    #   person.rect.y -= 10
-
-    # TODO: Fix this for boundries
-    # Stops sprite 'character' from going off screen
-    if person.rect.x > 1020:
-        person.rect.x -= 20
-    if person.rect.x < (-20):
-        person.rect.x += 20
-    if person.rect.y > 720:
-        person.rect.y += 20
-    if person.rect.y < 0:
-        person.rect.y -= 20
+    place = random.randint(0,3)
+    if place == 0:
+        person.rect.x += 25
+    if place == 1:
+        person.rect.x -= 25
+    if place == 2:
+       person.rect.y += 25
+    if place == 3:
+       person.rect.y -= 25
 
 pygame.quit()

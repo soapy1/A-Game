@@ -60,6 +60,15 @@ class Map(object):
                 for i in filter(str.isdigit, line.split(',')) ]
                 for line in filter(None, data.text.split('\n')) ] )
 
+	# Read the objectgroup
+        #self.objectgroup = list()
+	#for objectgroup in root.findall('objectgroup'):
+	#    objects = layer.find('object')
+	#    if data.get('name') == 'spawn':
+	#        data.get('x') = x_co
+	#        data.get('y') = y_co
+    	    
+
     def add_tileset(self, tileset):
         tilewidth = int(tileset.get('tilewidth'))
         tileheight = int(tileset.get('tileheight'))

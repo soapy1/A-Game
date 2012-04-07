@@ -1,4 +1,4 @@
-#TODO: fix movement 
+#TODO: fix movement (allow for rotation when moving car) 
 
 #!/usr/bin/env python2
 
@@ -29,10 +29,8 @@ class charTwo (pygame.sprite.Sprite):
 
 pygame.init()
 
-# Plays music
+# Initializes the mixer for music
 pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
-pygame.mixer.music.load('game/data/theme_one.ogg')
-pygame.mixer.music.play()
 
 # Sets up the screen
 pygame.display.set_caption('GET THAT TREE!')
@@ -71,7 +69,7 @@ person.rect.x = person_x
 person.rect.y = person_y
 
 # Key repeating
-pygame.key.set_repeat(10,10)
+pygame.key.set_repeat(100,5)
 
 # Manages how fast the screen updates
 clock = pygame.time.Clock()
@@ -86,11 +84,16 @@ while not done:
     all_list.draw(scr)
     clock.tick(60)
     pygame.display.flip()
-
-    # Detect collisions of the sprite 'car' 
+ 
+   # Detect collisions of the sprite 'car' 
     hit_list = sprite.spritecollide(car, sprite_list, True)
     if len (hit_list) > 0:
-        done = True 
+        done = True
+    
+    # Plays poorly recorded music 
+    if pygame.mixer.music.get_busy() == False:
+        pygame.mixer.music.load('game/data/walking_around_theme.ogg')
+        pygame.mixer.music.play()
 
     for event in pygame.event.get():
         # User pressed down on a key

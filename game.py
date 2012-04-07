@@ -1,5 +1,4 @@
-#TODO: fix movement of computer
-#      Fix movement of character and make it move on map
+#TODO: fix movement 
 
 #!/usr/bin/env python2
 
@@ -8,7 +7,6 @@
 import pygame, os, random
 from pygame import sprite
 from game import maps
-from xml.etree import ElementTree as etree
 
 white = (255,255,255)
 black = (0,0,0)
@@ -31,7 +29,13 @@ class charTwo (pygame.sprite.Sprite):
 
 pygame.init()
 
+# Plays music
+pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
+pygame.mixer.music.load('game/data/theme_one.ogg')
+pygame.mixer.music.play()
+
 # Sets up the screen
+pygame.display.set_caption('GET THAT TREE!')
 scr = pygame.display.set_mode()
 m = maps.Map('one.tmx')
 # Draw to temporary surface.
@@ -52,24 +56,27 @@ all_list.add(person)
 
 done = False
 
-# Default coordinates for the sprite
-x_co = 50
-y_co = 50
+# Coordinates for the sprite
+car_x = scr.get_width()/2 
+car_y = scr.get_height()/2
 
-car.rect.x = x_co
-car.rect.y = y_co
+car.rect.x = car_x
+car.rect.y = car_y
 
 # Coordinates for charTwo
-person.rect.x = random.randint(0,1000) 
-person.rect.y = random.randint(0,700)
+person_x = random.randint(0, 2400)
+person_y = random.randint(0, 2400)
+
+person.rect.x = person_x 
+person.rect.y = person_y
 
 # Key repeating
-pygame.key.set_repeat(10,100)
+pygame.key.set_repeat(10,10)
 
 # Manages how fast the screen updates
 clock = pygame.time.Clock()
 
-x_offset = 0; y_offset = 0
+x_offset = 0; y_offset = 0 
 min_x = scr.get_width()-s.get_width()
 min_y = scr.get_height()-s.get_height()
 
@@ -90,26 +97,22 @@ while not done:
         if event.type == pygame.KEYDOWN:
 	# Controls for the car
             if event.key == pygame.K_q:
+                pygame.mixer.music.stop()
                 done = True 
             elif event.key == pygame. K_LEFT :
-                car.rect.x -= 25
                 x_offset += 25
                 if x_offset < min_x: x_offset=min_x
             elif event.key == pygame . K_RIGHT :
-                car.rect.x += 25
                 x_offset -= 25
                 if x_offset > 0: x_offset=0
             elif event.key == pygame . K_UP :
-                car.rect.y -= 25
                 y_offset += 25
                 if y_offset < min_y: y_offset=min_y
             elif event.key == pygame . K_DOWN :
-                car.rect.y += 25
                 y_offset -=25
                 if x_offset > 0: x_offset=0
 
     # Moves the sprite 'person' around randomly
-    # TODO: Make this work better
     num = random.randint(0,3)
     if num == 0:
         dis = random.randint(0,100)
@@ -123,5 +126,15 @@ while not done:
     elif num == 3:
         dis = random.randint(0,100)
         person.rect.y -= dis
+
+    # Makes sure the sprite 'person' does not leave the screen
+    if person.rect.x >  2400:
+        person.rect.x -= 20
+    elif person.rect.x < 0:
+        person.rect.x += 20
+    elif person.rect.y > 2400:
+        person.rect.y -= 20
+    elif person.rect.y < 0:
+        person.rect.y += 20
 
 pygame.quit()
